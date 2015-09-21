@@ -1,0 +1,14 @@
+
+img {
+    /* vertical-align: middle; */
+    width: 300px!important;
+    height: 300px;
+    float: left;
+}
+label {
+  color: black !important;
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 5px;
+  font-weight: 700;
+}

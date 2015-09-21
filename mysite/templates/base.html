@@ -1,0 +1,104 @@
+{% load cms_tags staticfiles sekizai_tags menu_tags %}
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}This is my new project home page{% endblock title %}</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap-theme.min.css">
+        {% comment %}<link rel="stylesheet" href="/static/slider/css/style.css">{% endcomment %}
+        <link rel="stylesheet" href="/static/slider/css/bootstrap-responsive.css">
+	    <link rel="stylesheet" href="/static/slider/css/ekko-lightbox.min.css">
+     
+        {% render_block "css" %}
+    </head>
+    <body>
+        {% cms_toolbar %}
+        <div class="container">
+            <div class="navbar navbar-default" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    {% comment %}<a class="navbar-brand" href="#">Октябрьский</a>{% endcomment %}
+                </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+
+                        {% show_menu 0 1 100 100 "menu.html" %}
+                        </ul>
+                    </div>
+
+            </div>
+            {% block content %}{% endblock content %}
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script src="http://louisremi.github.io/jquery.transform.js/jquery.transform2d.js"></script>
+        <script src="/static/js/crew_slider.js"></script>
+	    <script src="/static/js/ekko-lightbox.min.js"></script>
+	    <script type="text/javascript">
+			$(document).ready(function ($) {
+
+				// delegate calls to data-toggle="lightbox"
+				$(document).delegate('*[data-toggle="lightbox"]:not([data-gallery="navigateTo"])', 'click', function(event) {
+					event.preventDefault();
+					return $(this).ekkoLightbox({
+						onShown: function() {
+							if (window.console) {
+								return console.log('Checking our the events huh?');
+							}
+						},
+						onNavigate: function(direction, itemIndex) {
+							if (window.console) {
+								return console.log('Navigating '+direction+'. Current item: '+itemIndex);
+							}
+						}
+					});
+				});
+
+				//Programatically call
+				$('#open-image').click(function (e) {
+					e.preventDefault();
+					$(this).ekkoLightbox();
+				});
+				$('#open-youtube').click(function (e) {
+					e.preventDefault();
+					$(this).ekkoLightbox();
+				});
+
+				$(document).delegate('*[data-gallery="navigateTo"]', 'click', function(event) {
+					event.preventDefault();
+					return $(this).ekkoLightbox({
+						onShown: function() {
+							var a = this.modal_content.find('.modal-footer a');
+							if(a.length > 0) {
+								a.click(function(e) {
+									e.preventDefault();
+									this.navigateTo(2);
+								}.bind(this));
+							}
+						}
+					});
+				});
+
+			});
+		</script>
+        <script>
+        $('.carousel').carousel({
+            interval: 3000
+        })
+        </script>
+        <script type="text/javascript">
+            var go;
+            $('#myCarousel').scrollbox({});
+            go = function(){$('#myCarousel').trigger('func');};
+            setInterval('go()', 2000);
+        </script>
+        {% render_block "js" %}
+    </body>
+</html>

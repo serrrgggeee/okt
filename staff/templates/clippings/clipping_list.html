@@ -1,0 +1,25 @@
+{% extends CMS_TEMPLATE %}
+{% load cms_tags sekizai_tags staticfiles thumbnail %}
+
+{% block title %}Staff{% endblock title %}
+
+{% block body_classes %}{{ block.super }} staffmember-list{% endblock %}
+
+{% block content %}
+  {% addtoblock "css" %}<link rel="stylesheet" href="{% static "staff/css/styles.css" %}">{% endaddtoblock %}
+  {% static_placeholder "staff_content" %}
+  <ul class="staff-list">
+    {% for staff in object_list %}
+    {% thumbnail staff.photo '136x136' crop subject_location=staff.photo.subject_location as photo %}
+    <li>
+      <a href="{{staff.get_absolute_url}}">
+      <img src="{{staff.get_absolute_url }}" width="{{ photo.width }}" height="{{ photo.height }}" alt="{{staff.get_absolute_url }}">
+      </a>
+      <a class="name" href="{{ staff.get_absolute_url }}">{{ staff.full_name }}</a>
+      <p class="title">{{ staff.get_absolute_url }}</p>
+    </li>
+    {% empty %}
+    <p>No staff yet, please add some!</p>
+    {% endfor %}
+  </ul>
+{% endblock %}

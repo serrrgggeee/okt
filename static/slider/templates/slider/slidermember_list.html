@@ -1,0 +1,48 @@
+{% extends CMS_TEMPLATE %}
+{% load cms_tags sekizai_tags staticfiles thumbnail %}
+
+{% block title %}Slider{% endblock title %}
+
+{% block body_classes %}{{ block.super }} slidermember-list{% endblock %}
+
+{% block content %}
+  <style>
+        body{overflow: hidden;}
+</style>
+  {% addtoblock "css" %}<link rel="stylesheet" href="{% static "slider/css/styles.css" %}">{% endaddtoblock %}
+ <div class="row">
+      <div class="col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 col-xs-10 col-xs-offset-2 col-lg-10 col-lg-offset-2">
+        <div  id="myCarousel" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner" role="listbox">
+
+            {% for slider in object_list %}
+            {% thumbnail slider.photo '900x900' crop subject_location=slider.photo.subject_location as photo %}
+
+                   <div class="item {{ slider.active }} ">
+                       <a href="{{slider.slug}}">
+                           <img src="{{ slider.photo_small.url}}" >
+                    <!--              <img src="{{ image1.url }}" width="{{ image1.width }}" height="{{ image1.height }}" alt="{{ slider.full_name }}">
+                       --></a>
+                       <!--<a class="name" href="{{ slider.slug }}">{{ slider.full_name }}</a>
+                       <p class="title">{{ slider.seniority }}</p>-->
+                   </div>
+
+
+            {% empty %}
+            <p>No slider yet, please add some!</p>
+            {% endfor %}
+              <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev" style="display: none">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next" style="display: none">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+        </div>
+      </div>
+ </div>
+{% static_placeholder "slider_content" %}
+
+{% endblock %}

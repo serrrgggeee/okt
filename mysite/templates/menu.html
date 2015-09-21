@@ -1,0 +1,59 @@
+
+{% load i18n menu_tags cache %}
+
+{% for child in children %}
+
+    <li class="{% if child.ancestor %}ancestor{% endif %}
+        {% if child.selected %} active{% endif %}
+        {% if child.children %}menuid17 dropdown{% endif %}">
+        {% if child.children %}
+             <a style="float:left;" href="{{ child.get_absolute_url }}" class="dropdown-toggle {% if child.ancestor %}ancestor{% endif %}">
+               <span class="glyphicon glyphicon-book"></span> {{ child.get_menu_title }}</a>{% endif %}
+    </li>
+    <li class="{% if child.ancestor %}ancestor{% endif %}
+        {% if child.selected %} active{% endif %}
+        {% if child.children %}menuid17 dropdown{% endif %}">
+        {% if child.children %}
+             <a style="float:left;" href="{{ child.get_absolute_url }}" class="dropdown-toggle {% if child.ancestor %}ancestor{% endif %}"
+                data-toggle="dropdown"><b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                {% show_menu from_level to_level extra_inactive extra_active template "" "" child %}
+            </ul>
+        {% else %}
+            <a href="{{ child.get_absolute_url }}"><span>{{ child.get_menu_title }}</span></a>
+        {% endif %}
+    </li>
+    {% if class and forloop.last and not forloop.parentloop %}{% endif %}
+{% endfor %}
+
+
+
+
+
+
+
+{% comment %}
+{% load i18n menu_tags cache %}
+
+
+
+
+{% for child in children %}
+
+  <div class="btn{% if child.ancestor %}ancestor{% endif %}
+        {% if child.selected %} active{% endif %}
+        {% if child.children %} dropdown{% endif %}">
+      {% if child.children %}
+      <a  href="{{ child.get_absolute_url }}" type="button" class="btn btn-default {% if child.ancestor %}ancestor{% endif %}">{{ child.get_menu_title }}
+      </a>
+      <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="caret"></span></button>
+          <ul class="dropdown-menu">
+                {% show_menu from_level to_level extra_inactive extra_active template "" "" child %}
+            </ul>
+      {% else %}
+            <a class="btn btn-default dropdown-toggle" href="{{ child.get_absolute_url }}"><span>{{ child.get_menu_title }}</span></a>
+        {% endif %}
+      </div>
+
+
+{% endfor %}{% endcomment %}
