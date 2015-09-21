@@ -1,0 +1,17 @@
+{% extends CMS_TEMPLATE %}
+{% load cms_tags sekizai_tags staticfiles thumbnail %}
+
+{% block title %}{{ main.full_name }}{% endblock title %}
+
+{% block body_classes %}{{ block.super }} staffmember-detail{% endblock %}
+
+{% block content %}
+  {% addtoblock "css" %}<link rel="stylesheet" href="{% static "staff/css/styles.css" %}">{% endaddtoblock %}
+  <div class="body-sidebar">
+    <div class="staff-detail">
+
+
+    </div>
+  </div>
+
+{% endblock content %}
